@@ -288,7 +288,7 @@ async function onOptionChange() {
   await setupUI();
 }
 
-async function setBrowserAction() {
+async function setAction() {
   const options = await storage.get([
     'dataTypes',
     'disabledDataTypes',
@@ -297,30 +297,30 @@ async function setBrowserAction() {
   const enDataTypes = await getEnabledDataTypes(options);
 
   if (enDataTypes.length === 1) {
-    browser.browserAction.setTitle({
+    browser.action.setTitle({
       title: getText(`actionTitle_${enDataTypes[0]}`)
     });
-    browser.browserAction.setPopup({popup: ''});
+    browser.action.setPopup({popup: ''});
   } else if (
     options.clearAllDataTypesAction === 'main' &&
     enDataTypes.length > 1
   ) {
-    browser.browserAction.setTitle({
+    browser.action.setTitle({
       title: getText('actionTitle_allDataTypes')
     });
-    browser.browserAction.setPopup({popup: ''});
+    browser.action.setPopup({popup: ''});
   } else {
-    browser.browserAction.setTitle({title: getText('extensionName')});
+    browser.action.setTitle({title: getText('extensionName')});
     if (enDataTypes.length === 0) {
-      browser.browserAction.setPopup({popup: ''});
+      browser.action.setPopup({popup: ''});
     } else {
-      browser.browserAction.setPopup({popup: '/src/action/index.html'});
+      browser.action.setPopup({popup: '/src/action/index.html'});
     }
   }
 }
 
-function addBrowserActionListener() {
-  browser.browserAction.onClicked.addListener(onActionButtonClick);
+function addActionListener() {
+  browser.action.onClicked.addListener(onActionButtonClick);
 }
 
 function addMessageListener() {
@@ -328,7 +328,7 @@ function addMessageListener() {
 }
 
 async function setupUI() {
-  await queue.add(setBrowserAction);
+  await queue.add(setAction);
 }
 
 async function setup() {
@@ -341,7 +341,7 @@ async function setup() {
 }
 
 function init() {
-  addBrowserActionListener();
+  addActionListener();
   addMessageListener();
 
   setup();

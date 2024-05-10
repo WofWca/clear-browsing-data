@@ -277,7 +277,7 @@ function getDataTypeIcon(dataType, {variant = ''} = {}) {
   return `/src/assets/icons/datatypes/${name}.${ext}`;
 }
 
-function handleBrowserActionEscapeKey() {
+function handleActionEscapeKey() {
   // Keep the browser action open when a menu or popup is active
 
   // Firefox: extensions cannot handle the Escape key event
@@ -320,6 +320,6 @@ export {
   getDataTypeIcon,
   getOpenerTabId,
   showPage,
-  handleBrowserActionEscapeKey,
+  handleActionEscapeKey,
   getAppTheme
 };
