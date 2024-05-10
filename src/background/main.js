@@ -182,6 +182,9 @@ async function clearDataType(dataType, options = null, enDataTypes = null) {
     const notification = await showNotification({
       messageId: 'info_dataTypeCleared'
     });
+    // TODO should probably convert this to an alarm?
+    // https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers#convert-timers
+    // Or is it fine as long as it's below 30 seconds?
     window.setTimeout(() => {
       browser.notifications.clear(notification);
     }, 6000); // 6 seconds

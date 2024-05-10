@@ -42,6 +42,9 @@ async function ensureStorageReady({area = 'local'} = {}) {
 
       const timeoutId = window.setTimeout(function () {
         stop = true;
+      // TODO this is also used by background script.
+      // The timeout seems a little too long, perhaps need to switch to alarms,
+      // otherwise it might get suspended waiting for this.
       }, 60000); // 1 minute
 
       checkStorage();
