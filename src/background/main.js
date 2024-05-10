@@ -185,7 +185,7 @@ async function clearDataType(dataType, options = null, enDataTypes = null) {
     // TODO should probably convert this to an alarm?
     // https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers#convert-timers
     // Or is it fine as long as it's below 30 seconds?
-    window.setTimeout(() => {
+    globalThis.setTimeout(() => {
       browser.notifications.clear(notification);
     }, 6000); // 6 seconds
   }
@@ -246,13 +246,16 @@ async function onActionPopupClick(dataType) {
 }
 
 async function processMessage(request, sender) {
-  // Samsung Internet 13: extension messages are sometimes also dispatched
-  // to the sender frame.
-  if (sender.url === document.URL) {
-    return;
-  }
-
   if (targetEnv === 'samsung') {
+    // Samsung Internet 13: extension messages are sometimes also dispatched
+    // to the sender frame.
+    // TODO IDK if Samsung Internet 13 supports service worker background
+    // scripts, but if so, then need to replace `document`.
+    // Perhaps with `runtime.getURL()`.
+    if (sender.url === document.URL) {
+      return;
+    }
+
     if (
       /^internet-extension:\/\/.*\/src\/action\/index.html/.test(
         sender.tab?.url

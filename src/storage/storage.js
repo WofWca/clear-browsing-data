@@ -31,16 +31,16 @@ async function ensureStorageReady({area = 'local'} = {}) {
 
       const checkStorage = async function () {
         if (await isStorageReady({area})) {
-          window.clearTimeout(timeoutId);
+          globalThis.clearTimeout(timeoutId);
           resolve();
         } else if (stop) {
           reject(new Error(`Storage (${area}) is not ready`));
         } else {
-          window.setTimeout(checkStorage, 30);
+          globalThis.setTimeout(checkStorage, 30);
         }
       };
 
-      const timeoutId = window.setTimeout(function () {
+      const timeoutId = globalThis.setTimeout(function () {
         stop = true;
       // TODO this is also used by background script.
       // The timeout seems a little too long, perhaps need to switch to alarms,

@@ -55,7 +55,7 @@ async function showNotification({
     );
 
     if (timeout) {
-      window.setTimeout(() => {
+      globalThis.setTimeout(() => {
         browser.notifications.clear(notification);
       }, timeout);
     }
