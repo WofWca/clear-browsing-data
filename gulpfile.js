@@ -178,6 +178,7 @@ function license() {
 
   const notice = `Clear Browsing Data
 Copyright (c) ${year} Armin Sebastian
+Copyright (c) 2024 WofWca
 
 This software is released under the terms of the GNU General Public License v3.0.
 See the LICENSE file for further information.
