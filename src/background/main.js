@@ -319,14 +319,6 @@ async function setAction() {
   }
 }
 
-function addActionListener() {
-  browser.action.onClicked.addListener(onActionButtonClick);
-}
-
-function addMessageListener() {
-  browser.runtime.onMessage.addListener(onMessage);
-}
-
 async function setupUI() {
   await queue.add(setAction);
 }
@@ -340,11 +332,7 @@ async function setup() {
   await setupUI();
 }
 
-function init() {
-  addActionListener();
-  addMessageListener();
+browser.action.onClicked.addListener(onActionButtonClick);
+browser.runtime.onMessage.addListener(onMessage);
 
-  setup();
-}
-
-init();
+setup();
