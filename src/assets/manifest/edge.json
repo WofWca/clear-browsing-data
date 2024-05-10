@@ -47,7 +47,8 @@
   },
 
   "background": {
-    "page": "src/background/index.html"
+    "service_worker": "src/background/script.js",
+    "type": "module"
   },
 
   "incognito": "split"
