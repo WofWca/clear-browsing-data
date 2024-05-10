@@ -204,7 +204,7 @@ import {
   showOptionsPage,
   showSupportPage,
   getDataTypeIcon,
-  handleBrowserActionEscapeKey,
+  handleActionEscapeKey,
   getAppTheme
 } from 'utils/app';
 import {getText, getActiveTab} from 'utils/common';
@@ -588,7 +588,7 @@ export default {
   },
 
   mounted: function () {
-    handleBrowserActionEscapeKey();
+    handleActionEscapeKey();
 
     window.setTimeout(() => {
       if (this.searchModeAction === 'url' && !this.$env.isMobile) {

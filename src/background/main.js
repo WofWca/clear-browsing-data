@@ -182,7 +182,10 @@ async function clearDataType(dataType, options = null, enDataTypes = null) {
     const notification = await showNotification({
       messageId: 'info_dataTypeCleared'
     });
-    window.setTimeout(() => {
+    // TODO should probably convert this to an alarm?
+    // https://developer.chrome.com/docs/extensions/develop/migrate/to-service-workers#convert-timers
+    // Or is it fine as long as it's below 30 seconds?
+    globalThis.setTimeout(() => {
       browser.notifications.clear(notification);
     }, 6000); // 6 seconds
   }
@@ -243,13 +246,16 @@ async function onActionPopupClick(dataType) {
 }
 
 async function processMessage(request, sender) {
-  // Samsung Internet 13: extension messages are sometimes also dispatched
-  // to the sender frame.
-  if (sender.url === document.URL) {
-    return;
-  }
-
   if (targetEnv === 'samsung') {
+    // Samsung Internet 13: extension messages are sometimes also dispatched
+    // to the sender frame.
+    // TODO IDK if Samsung Internet 13 supports service worker background
+    // scripts, but if so, then need to replace `document`.
+    // Perhaps with `runtime.getURL()`.
+    if (sender.url === document.URL) {
+      return;
+    }
+
     if (
       /^internet-extension:\/\/.*\/src\/action\/index.html/.test(
         sender.tab?.url
@@ -288,7 +294,7 @@ async function onOptionChange() {
   await setupUI();
 }
 
-async function setBrowserAction() {
+async function setAction() {
   const options = await storage.get([
     'dataTypes',
     'disabledDataTypes',
@@ -297,38 +303,30 @@ async function setBrowserAction() {
   const enDataTypes = await getEnabledDataTypes(options);
 
   if (enDataTypes.length === 1) {
-    browser.browserAction.setTitle({
+    browser.action.setTitle({
       title: getText(`actionTitle_${enDataTypes[0]}`)
     });
-    browser.browserAction.setPopup({popup: ''});
+    browser.action.setPopup({popup: ''});
   } else if (
     options.clearAllDataTypesAction === 'main' &&
     enDataTypes.length > 1
   ) {
-    browser.browserAction.setTitle({
+    browser.action.setTitle({
       title: getText('actionTitle_allDataTypes')
     });
-    browser.browserAction.setPopup({popup: ''});
+    browser.action.setPopup({popup: ''});
   } else {
-    browser.browserAction.setTitle({title: getText('extensionName')});
+    browser.action.setTitle({title: getText('extensionName')});
     if (enDataTypes.length === 0) {
-      browser.browserAction.setPopup({popup: ''});
+      browser.action.setPopup({popup: ''});
     } else {
-      browser.browserAction.setPopup({popup: '/src/action/index.html'});
+      browser.action.setPopup({popup: '/src/action/index.html'});
     }
   }
 }
 
-function addBrowserActionListener() {
-  browser.browserAction.onClicked.addListener(onActionButtonClick);
-}
-
-function addMessageListener() {
-  browser.runtime.onMessage.addListener(onMessage);
-}
-
 async function setupUI() {
-  await queue.add(setBrowserAction);
+  await queue.add(setAction);
 }
 
 async function setup() {
@@ -340,11 +338,7 @@ async function setup() {
   await setupUI();
 }
 
-function init() {
-  addBrowserActionListener();
-  addMessageListener();
+browser.action.onClicked.addListener(onActionButtonClick);
+browser.runtime.onMessage.addListener(onMessage);
 
-  setup();
-}
-
-init();
+setup();
