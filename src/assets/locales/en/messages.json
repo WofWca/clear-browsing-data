@@ -1,11 +1,11 @@
 {
   "extensionName": {
-    "message": "Clear Browsing Data",
+    "message": "Clear Cache and Cookies Chrome",
     "description": "Name of the extension."
   },
 
   "extensionDescription": {
-    "message": "Delete browsing data directly from the browser toolbar. Clear cookies, history and cache with a single click.",
+    "message": "🧹 Clear Cache and Cookies Chrome: Quickly clear cache and cookies for one specific site or many. Ideal for cleanup Chrome.",
     "description": "Description of the extension."
   },
 
