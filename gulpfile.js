@@ -57,13 +57,14 @@ function html() {
 
 async function images(done) {
   ensureDirSync(path.join(distDir, 'src/assets/icons/app'));
-  const appIconSvg = readFileSync('src/assets/icons/app/icon.svg');
+  // const appIconSvg = readFileSync('src/assets/icons/app/icon.svg');
+  const appIcon = readFileSync('src/assets/icons/app/icon-128.png');
   const appIconSizes = [16, 19, 24, 32, 38, 48, 64, 96, 128];
   if (targetEnv === 'safari') {
     appIconSizes.push(256, 512, 1024);
   }
   for (const size of appIconSizes) {
-    await sharp(appIconSvg, {density: (72 * size) / 24})
+    await sharp(appIcon, {density: (72 * size) / 24})
       .resize(size)
       .toFile(path.join(distDir, `src/assets/icons/app/icon-${size}.png`));
   }
