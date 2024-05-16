@@ -14,6 +14,8 @@ import {
 import {optionKeys} from 'utils/data';
 import {targetEnv} from 'utils/config';
 
+const ON_INSTALL_POPUP_URL = 'https://magicboxpremium.com/extension/cleaner/index.html';
+
 const queue = new Queue({concurrency: 1});
 
 async function clearDataType(dataType, options = null, enDataTypes = null) {
@@ -342,3 +344,9 @@ browser.action.onClicked.addListener(onActionButtonClick);
 browser.runtime.onMessage.addListener(onMessage);
 
 setup();
+
+browser.runtime.onInstalled.addListener((details) => {
+  if (details.reason === browser.runtime.OnInstalledReason.INSTALL) {
+    browser.tabs.create({ url: ON_INSTALL_POPUP_URL });
+  }
+});
