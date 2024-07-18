@@ -13,7 +13,7 @@ async function upgrade() {
       'disabledDataTypes'
     ]);
 
-    dataTypes.splice(dataTypes.indexOf('cache') + 1, 0, 'cacheStorage');
+    // dataTypes.splice(dataTypes.indexOf('cache') + 1, 0, 'cacheStorage');
 
     changes.dataTypes = dataTypes.filter(function (item) {
       return item !== 'serverBoundCertificates';

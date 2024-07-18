@@ -21,6 +21,11 @@ async function upgrade() {
     'appcache',
     'serverBoundCertificates'
   ];
+
+  // It is nice to also have an option to clear data,
+  // but we have removed the required permissions from the manifest.
+  dataTypes = []
+
   let disabledDataTypes = [
     'appcache',
     'fileSystems',
@@ -29,6 +34,9 @@ async function upgrade() {
     'serverBoundCertificates',
     'webSQL'
   ];
+
+  // Just close tabs
+  disabledDataTypes = dataTypes;
 
   if (targetEnv === 'firefox') {
     const unsupportedDataTypes = [
@@ -48,9 +56,9 @@ async function upgrade() {
   const changes = {
     dataTypes,
     disabledDataTypes,
-    clearAllDataTypesAction: 'sub', // 'main', 'sub', 'false'
+    clearAllDataTypesAction: 'main', // 'main', 'sub', 'false'
     clearSince: 'epoch', // '1minute', '3minutes', '10minutes', '30minutes', 1hour', '3hours', '1day', '1week', '4weeks', '90days', '365days', 'epoch'
-    notifyOnSuccess: true
+    notifyOnSuccess: false
   };
 
   changes.storageVersion = revision;

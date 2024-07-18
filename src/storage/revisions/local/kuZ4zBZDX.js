@@ -4,7 +4,7 @@ const revision = 'kuZ4zBZDX';
 
 async function upgrade() {
   const changes = {
-    closeTabs: 'false', // 'all', 'active', 'allButActive', 'exit', 'false'
+    closeTabs: 'all', // 'all', 'active', 'allButActive', 'exit', 'false'
     closePinnedTabs: true,
     reloadTabs: 'false' // 'all', 'active', 'allButActive', 'false'
   };

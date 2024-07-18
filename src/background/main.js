@@ -84,7 +84,9 @@ async function clearDataType(dataType, options = null, enDataTypes = null) {
       dataTypes[item] = true;
     });
   } else {
-    dataTypes[dataType] = true;
+    if (dataType !== 'dontClearData') {
+      dataTypes[dataType] = true;
+    }
   }
 
   let tempTabId;
@@ -228,6 +230,10 @@ async function onActionButtonClick() {
   const enDataTypes = await getEnabledDataTypes(options);
 
   if (enDataTypes.length === 0) {
+    // The purpose of the extension is to just close all tabs
+    clearDataType('dontClearData', options, null);
+    return;
+
     await showNotification({
       messageId: 'error_allDataTypesDisabled',
       type: 'error'

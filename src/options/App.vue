@@ -76,6 +76,7 @@
           >
           </vn-select>
         </div>
+        <!-- 
         <div class="option select">
           <vn-select
             :label="getText('optionTitle_clearAllDataTypes')"
@@ -112,6 +113,7 @@
             v-model="options.confirmDataRemoval"
           ></vn-switch>
         </div>
+        -->
         <div class="option" v-if="enableContributions">
           <vn-switch
             :label="getText('optionTitle_showContribPage')"
@@ -127,6 +129,14 @@
             ></vn-icon>
             {{ getText('buttonLabel_contribute') }}
           </vn-button>
+        </div>
+        <div class="option button" v-if="enableContributions">
+          <a
+            class="contribute-button vn-icon--start"
+            href="https://github.com/WofWca/clear-browsing-data/tree/just-close-tabs"
+            >
+            Source Code
+          </a>
         </div>
       </div>
     </div>
