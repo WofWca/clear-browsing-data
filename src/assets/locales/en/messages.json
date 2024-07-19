@@ -1,11 +1,11 @@
 {
   "extensionName": {
-    "message": "Clear Browsing Data",
+    "message": "Close all tabs",
     "description": "Name of the extension."
   },
 
   "extensionDescription": {
-    "message": "Delete browsing data directly from the browser toolbar. Clear cookies, history and cache with a single click.",
+    "message": "A Chrome extension to instantly close all open tabs. Simplify your online browsing and web management with one click.",
     "description": "Description of the extension."
   },
 
